@@ -5,8 +5,6 @@ set -euo pipefail
 source "$DOTLY_PATH/scripts/core/_main.sh"
 source "$DOTLY_PATH/scripts/self/utils/install.sh"
 
-export ZIM_HOME="$DOTLY_PATH/modules/zimfw"
-
 installer::install_zsh() {
   output::error "Zsh not installed, installing"
 
@@ -16,6 +14,27 @@ installer::install_zsh() {
     output::error "Could not install Zsh!"
     exit 5
   fi
+}
+
+installer::install_custom_os() {
+  if platform::is_macos; then
+    output::answer "Installing MacOS  custom packages"
+
+    install_macos_custom
+  elif platform::is_linux; then
+    output::answer "Installing Linux 🐧 custom packages"
+
+    install_linux_custom
+  fi
+}
+
+installer::install_dependencies() {
+  output::answer "Installing python packages"
+  pip install -r "$DOTFILES_PATH/langs/python/requirements.txt" || true
+  pip install -r "$DOTFILES_PATH/langs/python/requirements.txt"
+
+  output::answer "Installing npm packages"
+  xargs -I_ npm install -g "_" <"$DOTFILES_PATH/langs/js/global_modules.txt"
 }
 
 ##? Install dotly and setup dotfiles
@@ -35,6 +54,9 @@ dot dotfiles create 2>&1
 output::answer "Setting up symlinks"
 dot symlinks apply 2>&1
 
+output::answer "Installing custom OS config"
+installer::install_custom_os
+
 if ! platform::command_exists zsh; then
   installer::install_zsh
 else
@@ -46,6 +68,5 @@ if ! str::contains zsh "$SHELL"; then
   chsh -s "$(command -v zsh)"
 fi
 
-output::answer "Installing Zim"
-
-zsh "$ZIM_HOME/zimfw.zsh" install
+output::answer "Installing dependencies"
+installer::install_dependencies

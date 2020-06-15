@@ -5,8 +5,11 @@
       create: true
       force: true
 
-- create:
-      - ~/.hushlogin
+#- create:
+#    - ~/.hushlogin
 
 - link:
     ~/.dotly: os/mac/.dotly
+
+- shell:
+    - [test -f ~/.hushlogin || touch ~/.hushlogin, Created ~/.hushlogin file]

@@ -5,11 +5,14 @@
       create: true
       force: true
 
-- create:
-      - ~/.z
+#- create:
+#    - ~/.z
 
 - link:
-    ~/.zimrc: shell/zsh/.zimrc
-    ~/.zlogin: shell/zsh/.zlogin
+    #  ~/.zlogin: shell/zsh/.zlogin
     ~/.zshenv: shell/zsh/.zshenv
     ~/.zshrc: shell/zsh/.zshrc
+    ~/.zsh_plugins: shell/zsh/.zsh_plugins
+
+- shell:
+    - [test -f ~/.z || touch ~/.z, Created ~/.z file]
