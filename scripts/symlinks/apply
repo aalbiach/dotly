@@ -23,6 +23,15 @@ symlinks::apply "conf.yaml"
 
 if platform::is_macos; then
   symlinks::apply "conf.macos.yaml"
+
+  sudo ln -sf "$DOTFILES_PATH/os/mac/plist/limit.maxfiles.plist" "/Library/LaunchDaemons/limit.maxfiles.plist"
+  sudo ln -sf "$DOTFILES_PATH/os/mac/plist/limit.maxproc.plist" "/Library/LaunchDaemons/limit.maxproc.plist"
+  sudo chmod 644 "/Library/LaunchDaemons/limit.maxfiles.plist"
+  sudo chmod 644 "/Library/LaunchDaemons/limit.maxproc.plist"
+  sudo chown root:wheel /Library/LaunchDaemons/limit.maxfiles.plist
+  sudo chown root:wheel /Library/LaunchDaemons/limit.maxproc.plist
+  sudo launchctl load -w "/Library/LaunchDaemons/limit.maxfiles.plist"
+  sudo launchctl load -w "/Library/LaunchDaemons/limit.maxproc.plist"
 else
   symlinks::apply "conf.linux.yaml"
 fi

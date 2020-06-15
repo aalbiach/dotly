@@ -1,8 +1,5 @@
 #!/bin/user/env bash
 
-DOTBOT_DIR="$DOTLY_PATH/modules/dotbot"
-DOTBOT_BIN="$DOTBOT_DIR/bin/dotbot"
-
 self_update() {
   cd "$DOTFILES_PATH" || exit
 
@@ -20,32 +17,6 @@ update_submodules() {
 
   git submodule foreach git reset --hard
   git submodule update --recursive --remote
-}
-
-apply_symlinks() {
-  local -r CONFIG="$DOTFILES_PATH/symlinks/$1"
-  shift
-
-  echo
-  "$DOTBOT_BIN" -d "$DOTFILES_PATH" -c "$CONFIG" "$@"
-  echo
-}
-
-apply_common_symlinks() {
-  apply_symlinks "conf.yaml"
-}
-
-apply_macos_symlinks() {
-  apply_symlinks "conf.macos.yaml"
-
-  sudo ln -sf "$DOTFILES_PATH/os/mac/plist/limit.maxfiles.plist" "/Library/LaunchDaemons/limit.maxfiles.plist"
-  sudo ln -sf "$DOTFILES_PATH/os/mac/plist/limit.maxproc.plist" "/Library/LaunchDaemons/limit.maxproc.plist"
-  sudo chmod 644 "/Library/LaunchDaemons/limit.maxfiles.plist"
-  sudo chmod 644 "/Library/LaunchDaemons/limit.maxproc.plist"
-  sudo chown root:wheel /Library/LaunchDaemons/limit.maxfiles.plist
-  sudo chown root:wheel /Library/LaunchDaemons/limit.maxproc.plist
-  sudo launchctl load -w "/Library/LaunchDaemons/limit.maxfiles.plist"
-  sudo launchctl load -w "/Library/LaunchDaemons/limit.maxproc.plist"
 }
 
 project_status() {
