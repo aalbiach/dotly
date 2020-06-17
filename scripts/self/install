@@ -35,6 +35,10 @@ installer::install_dependencies() {
 
   output::answer "Installing npm packages"
   xargs -I_ npm install -g "_" <"$DOTFILES_PATH/langs/js/global_modules.txt"
+
+  if ! platform::command_exists sdk; then
+    curl -s "https://get.sdkman.io" | zsh
+  fi
 }
 
 ##? Install dotly and setup dotfiles
