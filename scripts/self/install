@@ -30,8 +30,8 @@ installer::install_custom_os() {
 
 installer::install_dependencies() {
   output::answer "Installing python packages"
-  pip install -r "$DOTFILES_PATH/langs/python/requirements.txt" || true
-  pip install -r "$DOTFILES_PATH/langs/python/requirements.txt"
+  pip3 install -r "$DOTFILES_PATH/langs/python/requirements.txt" || true
+  pip3 install -r "$DOTFILES_PATH/langs/python/requirements.txt"
 
   output::answer "Installing npm packages"
   xargs -I_ npm install -g "_" <"$DOTFILES_PATH/langs/js/global_modules.txt"
