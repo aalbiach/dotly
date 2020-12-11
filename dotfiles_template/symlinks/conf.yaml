@@ -5,11 +5,11 @@
       create: true
       force: true
 
-#- create:
-#    - ~/.z
-
 - link:
-    #  ~/.zlogin: shell/zsh/.zlogin
+    ~/.bash_profile: shell/bash/.bash_profile
+    ~/.bashrc: shell/bash/.bashrc
+#    ~/.zimrc: shell/zsh/.zimrc
+#    ~/.zlogin: shell/zsh/.zlogin
     ~/.zshenv: shell/zsh/.zshenv
     ~/.zshrc: shell/zsh/.zshrc
     ~/.zsh_plugins: shell/zsh/.zsh_plugins

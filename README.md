@@ -1,5 +1,3 @@
-> 🚨🚨🚨 This repo is in development, use with caution!!! 🚨🚨🚨
-
 <p align="center">
   <a href="http://codely.tv">
     <img src="http://codely.tv/wp-content/uploads/2016/05/cropped-logo-codelyTV.png" width="192px" height="192px"/>
@@ -7,7 +5,7 @@
 </p>
 
 <h1 align="center">
-  🐢  💨 dotly: An opinionated Zsh framework focused on dotfiles
+  🌚<br>Simple, fast, productivity-increaser dotfiles framework
 </h1>
 
 <p align="center">
@@ -24,5 +22,8 @@ bash <(curl -s https://raw.githubusercontent.com/aalbiach/dotly/master/installer
 
 Using wget
 ```bash
-wget -O - https://raw.githubusercontent.com/aalbiach/dotly/master/installer | bash
+bash <(wget -qO- https://raw.githubusercontent.com/aalbiach/dotly/master/installer)
 ```
+
+## Considerations using Apple M1
+* You should run your terminal/iTerm using Rosetta emulation

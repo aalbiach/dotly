@@ -1,30 +1,26 @@
 #!/bin/user/env bash
 
 install_macos_custom() {
-  # Install brew if not installed
-  if ! [ -x "$(command -v brew)" ]; then
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  if ! platform::command_exists brew; then
+    output::error "brew not installed, installing"
+    CI=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" >/dev/null 2>&1
   fi
 
-  # All apps (This line is 2 times because there are dependencies between brew cask and brew)
-  brew bundle --file="$DOTFILES_PATH/os/mac/brew/Brewfile" || true
-  brew bundle --file="$DOTFILES_PATH/os/mac/brew/Brewfile"
+  # Install needed packages
+  export PATH="$PATH:/usr/local/bin"
+  mkdir -p "$HOME/bin"
 
-  # Correct paths (so, we handle all with $PATH)
-  # sudo truncate -s 0 /etc/paths
+  output::answer "Installing needed gnu packages"
+  brew list bash || brew install bash >/dev/null
+  brew list coreutils || brew install coreutils >/dev/null
+  brew list make || brew install make >/dev/null
+  brew list gnu-sed || brew install gnu-sed >/dev/null
+  brew list findutils || brew install findutils >/dev/null
+  brew list bat || brew install bat >/dev/null
+  brew list hyperfine || brew install hyperfine >/dev/null
 
-  # Custom macOS "defaults"
-  sh "$DOTFILES_PATH/os/mac/mac-os.sh"
-
-  # default is (257*1024)
-  # sudo sysctl kern.maxvnodes=$((512*1024))
-  # echo kern.maxvnodes=$((512*1024)) | sudo tee -a /etc/sysctl.conf
-
-  # https://facebook.github.io/watchman/docs/install.html#mac-os-file-descriptor-limits
-  # sudo sysctl -w kern.maxfiles=$((10*1024*1024))
-  # sudo sysctl -w kern.maxfilesperproc=$((1024*1024))
-  # echo kern.maxfiles=$((10*1024*1024)) | sudo tee -a /etc/sysctl.conf
-  # echo kern.maxfilesperproc=$((1024*1024)) | sudo tee -a /etc/sysctl.conf
+  output::answer "Installing mas"
+  brew list mas || brew install mas >/dev/null
 }
 
 install_linux_custom() {
