@@ -1,8 +1,11 @@
 #!/bin/user/env bash
 
 HOMEBREW_DUMP_FILE_PATH="$DOTFILES_PATH/os/mac/brew/Brewfile"
+APT_DUMP_FILE_PATH="$DOTFILES_PATH/os/linux/apt/packages.txt"
+SNAP_DUMP_FILE_PATH="$DOTFILES_PATH/os/linux/snap/packages.txt"
 PYTHON_DUMP_FILE_PATH="$DOTFILES_PATH/langs/python/requirements.txt"
 NPM_DUMP_FILE_PATH="$DOTFILES_PATH/langs/js/global_modules.txt"
+VOLTA_DUMP_FILE_PATH="$DOTFILES_PATH/langs/js/volta_dependencies.txt"
 
 package::brew_dump() {
   mkdir -p "$DOTFILES_PATH/os/mac/brew"
@@ -14,6 +17,30 @@ package::brew_dump() {
 package::brew_import() {
   if [ -f "$HOMEBREW_DUMP_FILE_PATH" ]; then
     brew bundle install --file="$HOMEBREW_DUMP_FILE_PATH"
+  fi
+}
+
+package::apt_dump() {
+  mkdir -p "$DOTFILES_PATH/os/linux/apt"
+
+  apt-mark showmanual >"$APT_DUMP_FILE_PATH"
+}
+
+package::apt_import() {
+  if [ -f "$APT_DUMP_FILE_PATH" ]; then
+    xargs sudo apt-get install -y <"$APT_DUMP_FILE_PATH"
+  fi
+}
+
+package::snap_dump() {
+  mkdir -p "$DOTFILES_PATH/os/linux/snap"
+
+  snap list | tail -n +2 | awk '{ print $1 }' >"$SNAP_DUMP_FILE_PATH"
+}
+
+package::snap_import() {
+  if [ -f "$SNAP_DUMP_FILE_PATH" ]; then
+    xargs -I_ sudo snap install "_" <"$SNAP_DUMP_FILE_PATH"
   fi
 }
 
@@ -38,5 +65,17 @@ package::npm_dump() {
 package::npm_import() {
   if [ -f "$NPM_DUMP_FILE_PATH" ]; then
     xargs -I_ npm install -g "_" <"$NPM_DUMP_FILE_PATH"
+  fi
+}
+
+package::volta_dump() {
+  mkdir -p "$DOTFILES_PATH/langs/js"
+
+  volta list all --format plain | awk '{print $2}' >"$VOLTA_DUMP_FILE_PATH"
+}
+
+package::volta_import() {
+  if [ -f "$VOLTA_DUMP_FILE_PATH" ]; then
+    xargs -I_ volta install "_" <"$VOLTA_DUMP_FILE_PATH"
   fi
 }
