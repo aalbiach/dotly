@@ -23,6 +23,11 @@ docs::parse "$@"
 symlinks::apply "conf.yaml"
 
 if platform::is_macos; then
+  if platform::is_macos_arm; then
+    symlinks::apply "conf.macos.yaml"
+  else
+    symlinks::apply "conf.macos-intel.yaml"
+  fi
   symlinks::apply "conf.macos.yaml"
 
   sudo ln -sf "$DOTFILES_PATH/os/mac/plist/limit.maxfiles.plist" "/Library/LaunchDaemons/limit.maxfiles.plist"

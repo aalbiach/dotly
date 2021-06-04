@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-
+    name: 🚀 Build
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -29,9 +29,32 @@ jobs:
         run: |
           echo "DOTLY_REPOSITORY=${DOTLY_PR_REPOSITORY:-CodelyTV/dotly}" >> $GITHUB_ENV
           echo "DOTLY_BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
+          echo "DOTLY_ENV=CI" >> $GITHUB_ENV
 
       - name: Install
+        run: echo "$HOME/.dotfiles" | bash installer
+
+      - name: Debug on error
+        if: ${{ failure() }}
         run: |
           echo "DOTLY_REPOSITORY: $DOTLY_REPOSITORY"
           echo "DOTLY_BRANCH: $DOTLY_BRANCH"
-          echo "$HOME/.dotfiles" | bash installer
+          echo "DOTLY_ENV: $DOTLY_ENV"
+          cat "$HOME/dotly.log"
+
+  lint:
+    runs-on: ubuntu-latest
+    name: 💅 Lint
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 📥 Install shfmt
+        run: go get mvdan.cc/sh/v3/cmd/shfmt
+
+      - name: 💅 Lint bash files
+        run: |
+          grep "env bash" . -R |
+            grep -v "./modules/" |
+            grep -v "./.github/" |
+            awk -F':' '{print $1}' |
+            xargs "$HOME/go/bin/shfmt" -i 2 -d

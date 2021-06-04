@@ -5,14 +5,19 @@
       create: true
       force: true
 
+- create:
+    - $HOME/.z
+    - $DOTFILES_PATH/shell/bash/completions
+    - $DOTFILES_PATH/shell/bash/themes
+
 - link:
     ~/.bash_profile: shell/bash/.bash_profile
     ~/.bashrc: shell/bash/.bashrc
-#    ~/.zimrc: shell/zsh/.zimrc
-#    ~/.zlogin: shell/zsh/.zlogin
+    ~/.zlogin: shell/zsh/.zlogin
     ~/.zshenv: shell/zsh/.zshenv
     ~/.zshrc: shell/zsh/.zshrc
+    ~/.inputrc: shell/.inputrc
     ~/.zsh_plugins: shell/zsh/.zsh_plugins
 
-- shell:
-    - [test -f ~/.z || touch ~/.z, Created ~/.z file]
+#- shell:
+#    - [test -f ~/.z || touch ~/.z, Created ~/.z file]

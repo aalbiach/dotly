@@ -15,15 +15,12 @@
 
 ## Installation
 
-Using curl
-```bash
-bash <(curl -s https://raw.githubusercontent.com/aalbiach/dotly/master/installer)
-```
-
 Using wget
 ```bash
-bash <(wget -qO- https://raw.githubusercontent.com/aalbiach/dotly/master/installer)
+bash <(wget -qO- https://raw.githubusercontent.com/aalbiach/dotly/zim-to-antibody/installer)
 ```
 
-## Considerations using Apple M1
-* You should run your terminal/iTerm using Rosetta emulation
+Using curl
+```bash
+bash <(curl -s https://raw.githubusercontent.com/aalbiach/dotly/zim-to-antibody/installer)
+```
