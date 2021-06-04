@@ -6,6 +6,7 @@ SNAP_DUMP_FILE_PATH="$DOTFILES_PATH/os/linux/snap/packages.txt"
 PYTHON_DUMP_FILE_PATH="$DOTFILES_PATH/langs/python/requirements.txt"
 NPM_DUMP_FILE_PATH="$DOTFILES_PATH/langs/js/global_modules.txt"
 VOLTA_DUMP_FILE_PATH="$DOTFILES_PATH/langs/js/volta_dependencies.txt"
+SDKMAN_DUMP_FILE_PATH="$DOTFILES_PATH/os/mac/sdk/candidates.txt"
 
 package::brew_dump() {
   mkdir -p "$DOTFILES_PATH/os/mac/brew"
@@ -77,5 +78,26 @@ package::volta_dump() {
 package::volta_import() {
   if [ -f "$VOLTA_DUMP_FILE_PATH" ]; then
     xargs -I_ volta install "_" <"$VOLTA_DUMP_FILE_PATH"
+  fi
+}
+
+package::sdkman_dump() {
+  mkdir -p "$DOTFILES_PATH/os/mac/sdk"
+
+  mapfile -t candidates < <(__sdkman_build_version_csv | tr "," "\n")
+
+  for candidate in ${candidates[*]}; do
+    mapfile -t versions < <(__sdkman_build_version_csv "$candidate" | tr "," "\n")
+
+    for version in ${versions[*]}; do
+      echo "$candidate" "$version" >>"$SDKMAN_DUMP_FILE_PATH"
+    done;
+
+  done;
+}
+
+package::sdkman_import() {
+  if [ -f "$SDKMAN_DUMP_FILE_PATH" ]; then
+    xargs -I_ echo "sdk install _" <"$SDKMAN_DUMP_FILE_PATH"
   fi
 }

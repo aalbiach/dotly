@@ -31,8 +31,18 @@ install_macos_custom() {
 
   output::answer "Installing mas"
   brew list mas || brew install mas | log::file "Installing mas"
+
+  if ! platform::command_exists sdk; then
+    output::error "SDKMAN not installed, installing"
+
+    /bin/bash -c "$(curl -s https://get.sdkman.io)"
+  fi
 }
 
 install_linux_custom() {
-  echo
+  if ! platform::command_exists sdk; then
+    output::error "SDKMAN not installed, installing"
+
+    /bin/bash -c "$(curl -s https://get.sdkman.io)"
+  fi
 }

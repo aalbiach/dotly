@@ -13,8 +13,6 @@ self_update() {
 update_submodules() {
   cd "$DOTFILES_PATH" || exit
 
-  antibody update
-
   git submodule foreach git reset --hard
   git submodule update --recursive --remote
 }
