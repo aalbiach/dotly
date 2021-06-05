@@ -17,10 +17,10 @@
 
 Using wget
 ```bash
-bash <(wget -qO- https://raw.githubusercontent.com/aalbiach/dotly/zim-to-antibody/installer)
+bash <(wget -qO- https://raw.githubusercontent.com/aalbiach/dotly/antibody/installer)
 ```
 
 Using curl
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/aalbiach/dotly/zim-to-antibody/installer)
+bash <(curl -s https://raw.githubusercontent.com/aalbiach/dotly/antibody/installer)
 ```
