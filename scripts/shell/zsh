@@ -19,8 +19,8 @@ case $1 in
 
   find "$DOTFILES_PATH/shell/zsh" -name '*.zwc' -exec rm -rf {} \;
   find "$DOTFILES_PATH/shell/zsh" -name '*.old' -exec rm -rf {} \;
-  find "$DOTLY_PATH/modules/zimfw" -name '*.zwc' -exec rm -rf {} \;
-  find "$DOTLY_PATH/modules/zimfw" -name '*.old' -exec rm -rf {} \;
+#  find "$DOTLY_PATH/modules/zimfw" -name '*.zwc' -exec rm -rf {} \;
+#  find "$DOTLY_PATH/modules/zimfw" -name '*.old' -exec rm -rf {} \;
 
   /bin/zsh -c "source ${ZDOTDIR:-${HOME}}/.zlogin"
 
