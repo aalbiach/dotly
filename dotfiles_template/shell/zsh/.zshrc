@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # Uncomment for debug with `zprof`
 # zmodload zsh/zprof
 
@@ -27,7 +28,7 @@ SAVEHIST=$HISTSIZE
 
 source "$DOTFILES_PATH/shell/init.sh"
 
-fpath+=("$DOTFILES_PATH/shell/zsh/themes" "$DOTFILES_PATH/shell/zsh/autocompletions" "$DOTLY_PATH/shell/zsh/themes" "$DOTLY_PATH/shell/zsh/completions")
+fpath=("$DOTFILES_PATH/shell/zsh/themes" "$DOTFILES_PATH/shell/zsh/completions" "$DOTLY_PATH/shell/zsh/themes" "$DOTLY_PATH/shell/zsh/completions" $fpath)
 
 # Initialize the completion system
 autoload -Uz compinit
