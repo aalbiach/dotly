@@ -25,8 +25,8 @@ dot::list_scripts() {
 }
 
 dot::list_scripts_path() {
-  dotly_contexts=$(find "$DOTLY_PATH/scripts" -maxdepth 2 -perm /+111 -type f | grep -v "$DOTLY_PATH/scripts/core")
-  dotfiles_contexts=$(find "$DOTFILES_PATH/scripts" -maxdepth 2 -perm /+111 -type f)
+  dotly_contexts=$(find "$DOTLY_PATH/scripts" -maxdepth 2 -perm +111 -type f | grep -v "$DOTLY_PATH/scripts/core")
+  dotfiles_contexts=$(find "$DOTFILES_PATH/scripts" -maxdepth 2 -perm +111 -type f)
 
   printf "%s\n%s" "$dotly_contexts" "$dotfiles_contexts" | sort -u
 }
