@@ -16,6 +16,8 @@ setopt AUTO_LIST            # automatically list choices on ambiguous completion
 setopt AUTO_MENU            # automatically use menu completion
 setopt ALWAYS_TO_END        # move cursor to end if word had one match
 
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
 # Async mode for autocompletion
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_HIGHLIGHT_MAXLENGTH=300

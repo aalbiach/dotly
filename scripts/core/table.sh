@@ -1,6 +1,5 @@
-#!/usr/bin/env bash
-
 # Original from https://github.com/gdbtek/linux-cookbooks/blob/master/libraries/util.bash
+
 
 function removeEmptyLines() {
   local -r content="${1}"
