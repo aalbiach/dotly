@@ -4,3 +4,7 @@ shell/zsh/.zim
 
 shell/zsh/**/**.zwc
 shell/zsh/**/**.zwc.old
+
+# Private Stuff
+/**/**/private-*
+!/editors/micro/buffers/history
