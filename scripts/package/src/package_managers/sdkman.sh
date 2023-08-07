@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 sdkman::update_all() {
-  brew::self_update
-  brew::update_candidates
+  sdkman::self_update
+  sdkman::update_candidates
 }
 
 sdkman::self_update() {
-  sdk selfupdate 2>&1 | log::file "Updating SDKMAN"
+  sdk update 2>&1 | log::file "Updating SDKMAN"
 }
 
 sdkman::update_candidates() {
