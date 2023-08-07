@@ -11,7 +11,7 @@ setopt HIST_REDUCE_BLANKS   # remove superfluous blanks from history items
 setopt INC_APPEND_HISTORY   # save history entries as soon as they are entered
 setopt SHARE_HISTORY        # share history between different instances of the shell
 setopt AUTO_CD              # cd by typing directory name if it's not a command
-setopt CORRECT_ALL          # autocorrect commands
+#setopt CORRECT_ALL          # autocorrect commands
 setopt AUTO_LIST            # automatically list choices on ambiguous completion
 setopt AUTO_MENU            # automatically use menu completion
 setopt ALWAYS_TO_END        # move cursor to end if word had one match
