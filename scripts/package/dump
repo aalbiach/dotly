@@ -11,6 +11,7 @@ source "$DOTLY_PATH/scripts/package/src/dump.sh"
 ##?  * Python
 ##?  * Volta.sh or NPM
 ##?  * Winget
+##?  * asdf
 ##?
 ##? Usage:
 ##?   dump
@@ -33,6 +34,8 @@ elif platform::command_exists npm; then
 fi
 
 platform::command_exists winget.exe && package::winget_dump && output::answer "Windows apps dumped on $WINGET_DUMP_FILE_PATH"
+
+platform::command_exists asdf && package::asdf_dump && output::answer "asdf SDKs dumped on $ASDF_DUMP_FILE_PATH"
 
 platform::command_exists sdk && package::sdkman_dump && output::answer "SDKMAN candidates dumped on $SDKMAN_DUMP_FILE_PATH"
 
