@@ -17,15 +17,21 @@ fzf_prompt() {
 	local paths="$1"
 
 	script="$(
+		# A single sed keeps streaming into fzf (progressive load) and dies
+		# silently on SIGPIPE if fzf is aborted early, unlike an xargs child
 		echo "$paths" |
-			xargs -I % sh -c 'echo "$(basename $(dirname %)) $(basename %)"' |
+			sed -e 's|.*/scripts/||' -e 's|/| |' |
 			fzf \
 				--height 100% \
 				--preview '"$DOTLY_PATH/bin/dot" $(echo {} | cut -d" " -f 1) $(echo {} | cut -d" " -f 2) -h'
 	)"
 
+	# fzf was aborted (Esc/Ctrl-C) without a selection
+	[ -z "$script" ] && return 0
+
 	printf "%s" "$script"
-	read -r args
+	# Ctrl-D (EOF) must not fall through and relaunch the picker
+	read -r args || return 0
 
 	"$DOTLY_PATH/bin/dot" $script $args
 }

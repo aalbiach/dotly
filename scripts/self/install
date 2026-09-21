@@ -5,6 +5,18 @@ source "$DOTLY_PATH/scripts/self/utils/install.sh"
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
+##? Install dotly and setup dotfiles
+##?
+##? Usage:
+##?    install
+# docs::parse can't run before script::depends_on installs docpars on fresh
+# setups, so -h/--help is handled early here to keep documentation queries
+# (like the fzf preview in bin/dot) free of side effects.
+if [ "$1" == "-h" ] || [ "$1" = "--help" ]; then
+	docs::parse "$@"
+	exit 0
+fi
+
 if platform::is_macos; then
 	output::answer "🍎 Setting up macOS platform"
 	install_macos_custom
@@ -12,10 +24,6 @@ fi
 
 script::depends_on docpars fzf zsh python
 
-##? Install dotly and setup dotfiles
-##?
-##? Usage:
-##?    install
 docs::parse "$@"
 
 output::answer "Creating dotfiles structure"
